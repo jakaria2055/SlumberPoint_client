@@ -1,5 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
+
+const BookedIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M7.385 16.616h1V4h-1zM6.23 21q-.93 0-1.58-.65Q4 19.698 4 18.77V5.23q0-.929.65-1.58Q5.302 3 6.23 3h10.386v14.616H6.23q-.502 0-.866.341Q5 18.3 5 18.804t.365.85t.866.346H19V5h1v16z"
+    />
+  </svg>
+);
 
 const NavBar = () => {
   const navLinks = [
@@ -11,6 +26,11 @@ const NavBar = () => {
 
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const { openSignIn } = useClerk();
+  const { user } = useUser();
+  const { navigate } = useNavigate();
+  const { location } = useLocation();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +55,11 @@ const NavBar = () => {
           alt="logo"
           className={`h-9 ${isScrolled && "invert opacity-80"}`}
         />
-        <h3 className={`text-white text-2xl font-bold font-playfair h-9 ${isScrolled && "invert opacity-80"}`}>
+        <h3
+          className={`text-white text-2xl font-bold font-playfair h-9 ${
+            isScrolled && "invert opacity-80"
+          }`}
+        >
           SlumberPoint
         </h3>
       </Link>
@@ -59,6 +83,7 @@ const NavBar = () => {
           </a>
         ))}
         <button
+          onClick={() => navigate("/owner")}
           className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
             isScrolled ? "text-black" : "text-white"
           } transition-all`}
@@ -69,18 +94,55 @@ const NavBar = () => {
 
       {/* Desktop Right */}
       <div className="hidden md:flex items-center gap-4">
-        <img src="/icon/searchIcon.svg" alt="" className={`${isScrolled && 'invert'} h-7 transition-all duration-500`}/>
-        <button
-          className={`text-white bg-black px-8 py-2.5 rounded-full ml-4 transition-all duration-500 "
+        <img
+          src="/icon/searchIcon.svg"
+          alt=""
+          className={`${
+            isScrolled && "invert"
+          } h-7 transition-all duration-500`}
+        />
+
+        {user ? (
+          <UserButton>
+            <UserButton.MenuItems>
+              <UserButton.Action
+                label="My Bookings"
+                labelIcon={<BookedIcon />}
+                onClick={() => navigate("/my-booking")}
+              />
+            </UserButton.MenuItems>
+          </UserButton>
+        ) : (
+          <button
+            onClick={openSignIn}
+            className={`text-white bg-black px-8 py-2.5 rounded-full ml-4 transition-all duration-500 "
           }`}
-        >
-          Login
-        </button>
+          >
+            Login
+          </button>
+        )}
       </div>
 
       {/* Mobile Menu Button */}
+
       <div className="flex items-center gap-3 md:hidden">
-        <img onClick={()=> setIsMenuOpen(!isMenuOpen)} src="/icon/menuIcon.svg" alt="" className={` h-6 w-6 cursor-pointer ${isScrolled ? "invert" : ""}`}/>
+        {user && (
+          <UserButton>
+            <UserButton.MenuItems>
+              <UserButton.Action
+                label="My Bookings"
+                labelIcon={<BookedIcon />}
+                onClick={() => navigate("/my-booking")}
+              />
+            </UserButton.MenuItems>
+          </UserButton>
+        )}
+        <img
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          src="/icon/menuIcon.svg"
+          alt=""
+          className={` h-6 w-6 cursor-pointer ${isScrolled ? "invert" : ""}`}
+        />
       </div>
 
       {/* Mobile Menu */}
@@ -93,7 +155,7 @@ const NavBar = () => {
           className="absolute top-4 right-4"
           onClick={() => setIsMenuOpen(false)}
         >
-          <img src="/icon/closeIcon.svg" alt="" className="h-5."/>
+          <img src="/icon/closeIcon.svg" alt="" className="h-5." />
         </button>
 
         {navLinks.map((link, i) => (
@@ -102,13 +164,23 @@ const NavBar = () => {
           </a>
         ))}
 
-        <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-          DashBoard
-        </button>
+        {user && (
+          <button
+            onClick={() => navigate("/owner")}
+            className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all"
+          >
+            DashBoard
+          </button>
+        )}
 
-        <button className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
-          Login
-        </button>
+        {!user && (
+          <button
+            onClick={openSignIn}
+            className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500"
+          >
+            Login
+          </button>
+        )}
       </div>
     </nav>
   );
