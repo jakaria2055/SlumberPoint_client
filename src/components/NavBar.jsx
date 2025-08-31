@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
+
 
 const BookedIcon = () => (
   <svg
@@ -24,21 +25,30 @@ const NavBar = () => {
     { name: "About", path: "/" },
   ];
 
-  const [isScrolled, setIsScrolled] = React.useState(false);
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { openSignIn } = useClerk();
   const { user } = useUser();
-  const { navigate } = useNavigate();
-  const { location } = useLocation();
+  const  navigate  = useNavigate();
+  const  location  = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
+
+    if(location.pathname !== '/'){
+      setIsScrolled(true);
+      return;
+    }else{
+      setIsScrolled(false);
+    }
+    setIsScrolled(prev => location.pathname !== '/' ? true : prev);
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <nav
