@@ -87,7 +87,7 @@ export const exclusiveOffers = [
       "Enjoy 3 nights with complimentary breakfast and airport transfers",
     priceOff: 30,
     expiryDate: "Jul 15",
-    image: "summer_offer.jpg",
+    image: "/public/images/offer3.jpg",
   },
   {
     _id: 2,
@@ -95,7 +95,7 @@ export const exclusiveOffers = [
     description: "Romantic dinner, couple's spa, and champagne on arrival",
     priceOff: 25,
     expiryDate: "Dec 20",
-    image: "anniversary_special.jpg",
+    image: "/images/offer1.jpg",
   },
   {
     _id: 3,
@@ -104,7 +104,7 @@ export const exclusiveOffers = [
       "Book 90 days in advance for special rates at our premium locations",
     priceOff: 35,
     expiryDate: "Oct 10",
-    image: "early_bird.jpg",
+    image: "/images/offer2.jpg",
   },
   {
     _id: 4,
@@ -113,7 +113,7 @@ export const exclusiveOffers = [
       "Includes executive lounge access, late checkout, and meeting room credits",
     priceOff: 20,
     expiryDate: "Nov 30",
-    image: "business_package.jpg",
+    image: "/images/offer4.jpg",
   },
 ];
 
