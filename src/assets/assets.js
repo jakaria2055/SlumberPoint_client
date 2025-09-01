@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import searchIcon from "./searchIcon.svg";
+import searchIcon from "/public/icon/searchIcon.svg";
 import userIcon from "./userIcon.svg";
 import calenderIcon from "./calenderIcon.svg";
 import locationIcon from "./locationIcon.svg";
@@ -23,10 +23,10 @@ import badgeIcon from "./badgeIcon.svg";
 import menuIcon from "./menuIcon.svg";
 import closeMenu from "./closeMenu.svg";
 import guestsIcon from "./guestsIcon.svg";
-import roomImg1 from "/images/roomImg1.png";
-import roomImg2 from "/images/roomImg2.png";
-import roomImg3 from "/images/roomImg3.png";
-import roomImg4 from "/images/roomImg4.png";
+import roomImg1 from "/public/images/roomImg1.jpg";
+import roomImg2 from "/public/images/roomImg2.jpg";
+import roomImg3 from "/public/images/roomImg3.jpg";
+import roomImg4 from "/public/images/roomImg4.jpg";
 import regImage from "./regImage.png";
 import addIcon from "./addIcon.svg";
 import dashboardIcon from "./dashboardIcon.svg";
@@ -259,6 +259,8 @@ export const roomsDummyData = [
     updatedAt: "2025-04-10T06:24:06.285Z",
     __v: 0,
   },
+
+  
   {
     _id: "67f763d8197ac559e4089b7a",
     hotel: hotelDummyData,
