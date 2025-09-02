@@ -121,26 +121,16 @@ export const exclusiveOffers = [
 export const testimonials = [
   {
     id: 1,
-    name: "Rahman Khan",
-    address: "Dhaka, Bangladesh",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200",
-    rating: 5,
-    review:
-      "আমি অনেক বুকিং প্ল্যাটফর্ম ব্যবহার করেছি, কিন্তু SlumberPoint-এর মতো ব্যক্তিগত অভিজ্ঞতা এবং মনোযোগ অন্য কোথাও পাইনি। তাদের পরিষেবা অসাধারণ!",
-  },
-  {
-    id: 2,
     name: "Tasnim Ahmed",
     address: "Chittagong, Bangladesh",
     image:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200",
     rating: 4,
     review:
-      "LuxeNook আমার প্রত্যাশা ছাড়িয়ে গেছে। বুকিং প্রক্রিয়াটি নির্বিঘ্ন ছিল, এবং হোটেলগুলি একদম প্রথম শ্রেণীর ছিল। অত্যন্ত সুপারিশকৃত!",
+      "SlumberPoint আমার প্রত্যাশা ছাড়িয়ে গেছে। বুকিং প্রক্রিয়াটি নির্বিঘ্ন ছিল, এবং হোটেলগুলি একদম প্রথম শ্রেণীর ছিল। অত্যন্ত সুপারিশকৃত!",
   },
   {
-    id: 3,
+    id: 2,
     name: "Jamil Hasan",
     address: "Sylhet, Bangladesh",
     image:
@@ -150,7 +140,7 @@ export const testimonials = [
       "অসাধারণ সেবা! আমি সবসময় SlumberPoint এর মাধ্যমে সেরা বিলাসবহুল থাকার ব্যবস্থা খুঁজে পাই। তাদের সুপারিশ কখনই হতাশ করে না!",
   },
   {
-    id: 4,
+    id: 3,
     name: "Nusrat Jahan",
     address: "Cox's Bazar, Bangladesh",
     image:
