@@ -18,7 +18,7 @@ function Booked() {
         <div className="hidden md:grid md:grid-cols-[3fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3">
           <div className="w-1/3">Hotels</div>
           <div className="w-1/3">Date & Timing</div>
-          <div className="w-1/3">Payment</div>
+          <div className="w-1/3">Payments</div>
         </div>
 
         {bookings.map((booking) => (
