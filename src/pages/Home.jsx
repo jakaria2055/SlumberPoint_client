@@ -5,12 +5,14 @@ import Offer from "../components/Offer";
 import Review from "../components/Review";
 import NewsLetter from "../components/NewsLetter";
 import Footer from "../components/Footer";
+import RecommandedHotel from "../components/RecommandedHotel";
 
 
 function Home() {
   return (
     <>
       <Hero />
+      <RecommandedHotel />
       <Destination />
       <Offer />
       <Review />

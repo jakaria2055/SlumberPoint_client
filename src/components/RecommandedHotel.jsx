@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./smallcomponents/Card";
 import TitleHeader from "./smallcomponents/TitleHeader";
-import ViewAllButton from "./smallcomponents/ViewAllButton";
 import { useAppContext } from "../context/AppContext";
 
-function Destination() {
-  const {rooms, navigate} = useAppContext();
+function RecommandedHotel() {
+  const {rooms, searchedCities} = useAppContext();
+  const [recommended, setRecommended] = useState([]);
+
+  const filterHotels = () =>{
+    const filteredHotels = rooms.slice().filter(room => searchedCities.includes(room.hotel.city));
+    setRecommended(filteredHotels);
+  }
+
+  useEffect(()=>{
+    filterHotels();
+  },[rooms, searchedCities])
 
   // console.log(roomsDummyData);
-  return rooms.length> 0 && (
+  return recommended.length> 0 && (
     <div className="flex flex-col items-center  px-6 md:px-16 lg:px-24 bg-slate-50">
 
       {/* HEADER */}
       <TitleHeader
-        title={"Unwind in Elegance"}
+        title={"Hotel You May Search"}
         subTitle={
           "Step into a world of refined elegance where every detail is carefully curated for your ultimate comfort and relaxation."
         }
@@ -21,21 +30,13 @@ function Destination() {
 
       {/* CARD */}
       <div className="flex flex-wrap items-center justify-center gap-6 mt-20">
-        {rooms.slice(0, 4).map((room, index) => (
+        {recommended.slice(0, 4).map((room, index) => (
           <Card key={room._id} room={room} index={index} />
         ))}
       </div>
 
-      {/* VIEW BUTTON */}
-      <ViewAllButton
-        text={"Explore All"}
-        onclick={() => {
-          navigate("/rooms");
-          scrollTo(0, 0);
-        }}
-      />
     </div>
   );
 }
 
-export default Destination;
+export default RecommandedHotel;

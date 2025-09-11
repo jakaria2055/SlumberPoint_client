@@ -3,20 +3,71 @@ import { useParams } from "react-router-dom";
 import {
   facilityIcons,
   roomCommonData,
-  roomsDummyData,
 } from "../assets/assets";
 import StarRating from "../components/smallcomponents/StarRating";
+import { useAppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
 function RoomDetails() {
   const { id } = useParams();
+  const {rooms, getToken, axios, navigate} = useAppContext();
   const [room, setRoom] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [guests, setGuests] = useState(1);
+
+  const [isAvailable, setIsAvailable] = useState(false);
+
+
+  const checkAvailability = async () => {
+    try {
+      if(checkInDate >= checkOutDate){
+        toast.error("Checkin Date should less that CheckOut date")
+        return ;
+      }
+      const {data} = await axios.post('/api/bookings/check-availability', {room: id, checkInDate, checkOutDate})
+      if(data.success){
+        if(data.isAvailable){
+          setIsAvailable(true)
+          toast.success("Room is Available")
+        }else{
+          setIsAvailable(false)
+          toast.error("Room is Not Available.")
+        }
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+  }
+}
+
+  const onSubmitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      if(!isAvailable){
+        return checkAvailability();
+      }else{
+        const {data} = await axios.post('/api/bookings/book', {room:id, checkInDate, checkOutDate, guests, paymentMethod: "Pay At Hotel"}, {headers: { Authorization: `Bearer ${await getToken()}` }})
+        if(data.success){
+          toast.success(data.message)
+          navigate('/my-booking')
+          scrollTo(0,0)
+        }else{
+          toast.error(data.message)
+        }
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
 
   useEffect(() => {
-    const room = roomsDummyData.find((room) => room._id === id);
+    const room = rooms.find((room) => room._id === id);
     room && setRoom(room);
     room && setMainImage(room.images[0]);
-  }, []);
+  }, [rooms]);
 
   return (
     room && (
@@ -95,13 +146,15 @@ function RoomDetails() {
         </div>
 
         {/* CHECKIN & OUT FORM */}
-        <form className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white shadow-[0px_0px_20px_rgba(0,0,0,0.15)] p-6 rounded-xl mx-auto mmt-16 max-w-6xl">
+        <form onSubmit={onSubmitHandler} className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white shadow-[0px_0px_20px_rgba(0,0,0,0.15)] p-6 rounded-xl mx-auto mmt-16 max-w-6xl">
           <div className="flex flex-col flex-wrap md:flex-row items-start md:items-center gap-4 md:gap-10 text-gray-500">
             <div className="flex flex-col">
               <label htmlFor="checkInDate" className="font-medium">
                 Check In
               </label>
               <input
+              onChange={(e) => setCheckInDate(e.target.value)}
+               min={new Date().toISOString().split('T')[0]}
                 type="date"
                 id="checkInDate"
                 className="w-full rounded border border-gray-300 px-3 py-2 mt-1.5 outline-none"
@@ -115,6 +168,8 @@ function RoomDetails() {
                 Check Out
               </label>
               <input
+               onChange={(e) => setCheckOutDate(e.target.value)}
+               min={checkInDate} disabled={!checkInDate}
                 type="date"
                 id="checkOutDate"
                 className="w-full rounded border border-gray-300 px-3 py-2 mt-1.5 outline-none"
@@ -128,11 +183,12 @@ function RoomDetails() {
                 Guest
               </label>
               <input
+                onChange={(e) => setGuests(e.target.value)} value={guests}
                 type="number"
                 id="guests"
                 className="max-w-20 rounded border border-gray-300 px-3 py-2 mt-1.5"
                 required
-                placeholder="0"
+                placeholder="1"
               />
             </div>
           </div>
@@ -141,7 +197,7 @@ function RoomDetails() {
             type="submit"
             className="bg-[#33A1E0] hover:bg-primary-dull active:scale-95 transition-all text-white rounded-md max-md:w-full max-md:mt-6 md:px-25 py-3 md:py-4 text-base cursor-pointer"
           >
-            Check Availability
+           {isAvailable ? "Book Now" : "Check Availability"}
           </button>
         </form>
 

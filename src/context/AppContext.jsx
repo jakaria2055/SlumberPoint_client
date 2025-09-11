@@ -59,7 +59,7 @@ export const AppProvider = ({ children }) => {
 
       if (data.success) {
         setIsOwner(data.role === "hotelOwner");
-        setSearchedCities(data.recentSearchedCities);
+        setSearchedCities(data.recentSearchedCities || []);
       } else {
          console.log("User fetch failed:", data.message);
         // ❌ Do NOT retry if unauthorized

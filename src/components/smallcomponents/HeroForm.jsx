@@ -1,16 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAppContext } from "../../context/AppContext";
 
 function HeroForm() {
+  const { navigate, getToken, axios, setSearchedCities } = useAppContext();
+  const [destination, setDestination] = useState("");
+
+  const onSearch = async (e) => {
+    e.preventDefault();
+    navigate(`/rooms?destination=${destination}`);
+
+    try {
+      await axios.post(
+        "/api/user/store-recent-search",
+        { recentSearchCity: destination },
+        {
+          headers: { Authorization: `Bearer ${await getToken()}` },
+        }
+      );
+
+      setSearchedCities((prevSearchedCities) => {
+        const updatedSearchedCities = [...prevSearchedCities, destination];
+        if (updatedSearchedCities.length > 3) {
+          updatedSearchedCities.shift();
+        }
+        return updatedSearchedCities;
+      });
+    } catch (error) {
+      console.error("Failed to save recent search:", error);
+    }
+  };
+
   const cities = ["Cox's Bazar", "Kuyakata", "Sylhet", "Sajek", "Bandharban"];
+
   return (
     <>
-      <form className="bg-[#BBDCE5] text-gray-500 rounded-lg mt-5 px-6 py-4  flex flex-col md:flex-row max-md:items-start gap-4 max-md:mx-auto">
+      <form
+        onSubmit={onSearch}
+        className="bg-[#BBDCE5] text-gray-500 rounded-lg mt-5 px-6 py-4  flex flex-col md:flex-row max-md:items-start gap-4 max-md:mx-auto"
+      >
         <div>
           <div className="flex items-center gap-2">
-            <img src={"/icon/calenderIcon.svg"} alt="" className="h-4"/>
+            <img src={"/icon/calenderIcon.svg"} alt="" className="h-4" />
             <label htmlFor="destinationInput">Destination</label>
           </div>
           <input
+            onChange={(e) => setDestination(e.target.value)}
+            value={destination}
             list="destinations"
             id="destinationInput"
             type="text"
@@ -27,7 +62,7 @@ function HeroForm() {
 
         <div>
           <div className="flex items-center gap-2">
-             <img src={"/icon/calenderIcon.svg"} alt="" className="h-4"/>
+            <img src={"/icon/calenderIcon.svg"} alt="" className="h-4" />
             <label htmlFor="checkIn">Check in</label>
           </div>
           <input
@@ -39,7 +74,7 @@ function HeroForm() {
 
         <div>
           <div className="flex items-center gap-2">
-            <img src={"/icon/calenderIcon.svg"} alt="" className="h-4"/>
+            <img src={"/icon/calenderIcon.svg"} alt="" className="h-4" />
             <label htmlFor="checkOut">Check out</label>
           </div>
           <input
@@ -62,7 +97,7 @@ function HeroForm() {
         </div>
 
         <button className="flex items-center justify-center gap-1 rounded-md bg-black py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1">
-           <img src={"/icon/searchIcon.svg"} alt="" className="h-7"/>
+          <img src={"/icon/searchIcon.svg"} alt="" className="h-7" />
           <span>Search</span>
         </button>
       </form>

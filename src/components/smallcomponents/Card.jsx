@@ -28,7 +28,7 @@ function Card({ room, index }) {
 
         <div>
           <img src={"/icon/locationIcon.svg"} alt="locationIcon" />
-          <span>{room.hotel.address}</span>
+          <span>{room.hotel.city}</span>
         </div>
         <div className="flex items-center justify-between mt-4">
           <p>

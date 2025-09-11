@@ -170,7 +170,7 @@ function Rooms() {
               </div>
               <div className="flex items-center gap-1 text-gray-500 mt-2 text-sm">
                 <img src="/icon/locationIcon.svg" alt="location" />
-                <span>{room.hotel.address}</span>
+                <span>{room.hotel.city}</span>
               </div>
               <div className="flex flex-wrap items-center mt-3 mb-6 gap-4">
                 {room.amenities.map((item, index) => (
