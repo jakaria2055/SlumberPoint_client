@@ -1,5 +1,4 @@
 import React from "react";
-import NavBar from "./components/NavbAr";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
@@ -13,6 +12,7 @@ import AddRoom from "./pages/HotelOwner/AddRoom";
 import ListRoom from "./pages/HotelOwner/ListRoom";
 import { Toaster } from "react-hot-toast";
 import { useAppContext } from "./context/AppContext";
+import NavBar from "./components/NavBar";
 
 function App() {
   const isOwnerPath = useLocation().pathname.includes("owner");
