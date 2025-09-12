@@ -8,7 +8,7 @@ function Footer() {
           <div className="max-w-80">
             <div className="flex items-center">
                 <img
-              src="/public/icon/logo.svg"
+              src="/icon/logo.svg"
               alt="logo"
               className="mb-4 h-8 md:h-9"
             />

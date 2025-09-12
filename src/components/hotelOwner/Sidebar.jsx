@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom'
 
 function Sidebar() {
     const sidebarLink = [
-        {name: "DashBoard", path:"/owner", icon:"/public/icon/dashboardIcon.svg"},
-        {name: "Add Room", path:"/owner/add-room", icon:"/public/icon/addIcon.svg"},
-        {name: "List Room", path:"/owner/list-room", icon:"/public/icon/listIcon.svg"},
+        {name: "DashBoard", path:"/owner", icon:"/icon/dashboardIcon.svg"},
+        {name: "Add Room", path:"/owner/add-room", icon:"/icon/addIcon.svg"},
+        {name: "List Room", path:"/owner/list-room", icon:"/icon/listIcon.svg"},
     ]
   return (
     <div className=' md:w-64 w-16 border-r h-full text-base border-gray-300 pt-4 flex flex-col transition-all duration-300'>
